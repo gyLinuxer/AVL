@@ -59,7 +59,6 @@ void insert_avl(struct node * node)
 	    cur_dir = 2;
 
 	while(!stop){
-	
 	    if (node->dat < next->dat){//insert it to left
 		
                 if(!min_rev_node && (cur_dir == 2))
@@ -73,56 +72,40 @@ void insert_avl(struct node * node)
 		    stop = 1;
 		    //start modify the maxheight of probable parent nodes.
 		    mstop = 0;
-
-		    parent = next->parent;
-		    while(parent && !mstop){
-			parent = next->parent;
-		        parent->bf = get_bf(parent->left,parent->right); 
-			max_height = get_max_height(parent);
-			if(parent->maxheight!=max_height){
-			    parent->maxheight = max_height;
-			    if(parent->bf > 1 || parent->bf<-1)
-				min_no_bf_node = parent;
-			{
-			else
-			    mstop = 1;
-	           }
-
-	}else
+		}else
 		    next = next->left;	
 
 	    }else{//insert it to right
 
 	       if(!min_rev_node && (cur_dir == 1))
 			min_rev_node = next;
-		}
-
 
 		if(!next->right){
 		    stop = 1 ;
 		    next->right = node;
 		    node->parnet = next;		    
 		    node->maxheight = 0; 		    
-
-		    parent = next->parent;
-		    while(parent && !mstop){
-			parent = next->parent;
- 			parent->bf = get_bf(parent->left,parent->right);
-			max_height =  get_max_height(parent);
-
-			if(parent->maxheight!=max_height){
-			    parent->maxheight = max_height;
-			    f(parent->bf > 1 || parent->bf<-1)
-			        min_no_bf_node = parent;
-
-			{
-			else
-			    mstop = 1;
-	           }
 		}else	
 		    next = next->right;	
+
 	    }
-	}
+
+	    parent = next->parent;
+   	    while(parent && !mstop){
+		parent = next->parent;
+		parent->bf = get_bf(parent->left,parent->right);
+		max_height =  get_max_height(parent);
+
+		if(parent->maxheight!=max_height){
+	 	   parent->maxheight = max_height;
+	            
+		    if(parent->bf > 1 || parent->bf<-1)
+	      	        min_no_bf_node = parent;
+
+		}else
+	          mstop = 1;
+	
+		
 	
 			
 	if(!min_no_bf_node) 
